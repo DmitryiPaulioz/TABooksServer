@@ -30,7 +30,6 @@ class ClientSession implements Runnable {
         }
 
         try {
-
             CommandHandler handlerForInvoke = specificServer.findHandler(request);
             handlerForInvoke.getICommandHandler().handle(request, response);
         } catch (IOException e1) {

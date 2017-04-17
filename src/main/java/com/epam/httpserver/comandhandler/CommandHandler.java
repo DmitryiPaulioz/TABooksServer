@@ -8,6 +8,7 @@ public class CommandHandler {
     private String uri;
     private ICommandHandler iCommandHandler;
 
+
     public CommandHandler(String method, String uri, ICommandHandler iCommandHandler) {
         this.method = method;
         this.uri = uri;

@@ -14,83 +14,92 @@ import java.util.Map;
 public class ResponseHandler {
 
 
-    private OutputStream os;
+    private String version;
+    private String statusCode;
 
-    public void setOs(OutputStream os) {
-        this.os = os;
+    public String getVersion() {
+        return version;
     }
 
     public void setVersion(String version) {
         this.version = version;
     }
 
-    public void setStatusCode(String statusCode) {
-        this.statusCode = statusCode;
-    }
-
-    public void setServer(String server) {
-        this.server = server;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-
-    public void setContentLength(String contentLength) {
-        this.contentLength = contentLength;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    private String version;
-    private String statusCode;
-    private String server;
-    private String date;
-    private String contentType;
-    private String contentLength;
-    private String body;
-
-
-    public OutputStream getOs() {
-        return os;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
     public String getStatusCode() {
         return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
     }
 
     public String getServer() {
         return server;
     }
 
+    public void setServer(String server) {
+        this.server = server;
+    }
+
     public String getDate() {
         return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getContentType() {
         return contentType;
     }
 
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
     public String getContentLength() {
         return contentLength;
+    }
+
+    public void setContentLength(String contentLength) {
+        this.contentLength = contentLength;
     }
 
     public String getBody() {
         return body;
     }
 
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    private String server;
+    private String date;
+    private String contentType;
+    private String contentLength;
+    private String body;
+
+    private OutputStream os;
+
+
     public ResponseHandler(OutputStream outputStream) {
         this.os = outputStream;
+    }
+
+    public static void createResponse(ResponseHandler responce, RequestHandler request) {
+
+        String body = "";
+        responce.setVersion(request.getVersion());
+        responce.setContentLength(String.valueOf(body.getBytes().length));
+        responce.setBody(body);
+        responce.setContentType(request.getContentType());
+
+        try {
+            responce.write();
+            System.out.println(responce);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void write() throws IOException {

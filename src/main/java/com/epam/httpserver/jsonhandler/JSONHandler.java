@@ -17,23 +17,28 @@ import java.util.List;
  */
 public class JSONHandler {
 
-    private final String JSON_PATH = "";
-    private LinkedList<Book> books = null;
+    private static LinkedList<Book> books = new LinkedList<Book>();
     private static final Gson gson = new Gson();
 
-    public LinkedList readAllBooksFromJSON() {
+    public static LinkedList readAllBooksFromJSON(String jsonPath) {
+        System.out.println("JSON read");
         try {
-            books = gson.fromJson(new BufferedReader(new FileReader(JSON_PATH)), LinkedList.class);
+            books = gson.fromJson(new BufferedReader(new FileReader(jsonPath)), LinkedList.class);
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         return books;
     }
 
-    public void writeAllBooksToJSON(LinkedList<Book> books) {
+    public static String convertJSONToString(LinkedList<Book> books) {
+        return gson.toJson(books, books.getClass());
+    }
+
+    public static void writeAllBooksToJSON(LinkedList<Book> books, String jsonPath) {
         FileWriter writer;
         try {
-            writer = new FileWriter(JSON_PATH);
+            writer = new FileWriter(jsonPath);
             writer.write(gson.toJson(books));
             writer.close();
         } catch (IOException e) {

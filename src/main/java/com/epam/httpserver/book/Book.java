@@ -10,6 +10,14 @@ public class Book {
     private int yearOfEdition;
     private int id;
 
+    public Book(String title, String authorName, int pageCount, int yearOfEdition, int id){
+        this.title = title;
+        this.authorName = authorName;
+        this.pageCount = pageCount;
+        this.yearOfEdition = yearOfEdition;
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
     }

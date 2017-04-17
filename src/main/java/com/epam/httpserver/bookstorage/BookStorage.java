@@ -9,17 +9,24 @@ import java.util.LinkedList;
  * Created by Dmitryi_Paulioz on 4/17/2017.
  */
 public class BookStorage {
-    private LinkedList<Book> allBooks = null;
-    JSONHandler handlerOfJSON = null;
 
-    public BookStorage(){
-        if (allBooks == null) {
-            handlerOfJSON = new JSONHandler();
-            allBooks = handlerOfJSON.readAllBooksFromJSON();
-        }
-    }
+
+    private LinkedList<Book> allBooks = null;
 
     public LinkedList<Book> getAllBooks() {
         return allBooks;
+    }
+
+    public void setAllBooks(LinkedList<Book> allBooks) {
+        this.allBooks = allBooks;
+    }
+
+    public void addBook(Book book){
+        allBooks.add(book);
+    }
+    public void deleteLastBook(){
+        if(!allBooks.isEmpty()){
+            allBooks.removeLast();
+        }
     }
 }
