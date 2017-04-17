@@ -1,8 +1,15 @@
 package com.epam.httpserver.server;
 
 import com.epam.httpserver.comandhandler.CommandHandler;
+import com.epam.httpserver.comandhandler.commands.*;
+import com.epam.httpserver.handler.RequestHandler;
+import com.epam.httpserver.handler.ResponseHandler;
+import com.epam.httpserver.resources.CommonConstants;
+import jdk.nashorn.internal.runtime.GlobalConstants;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -13,7 +20,7 @@ import java.util.concurrent.Executors;
 public class HttpServer {
 
     private static final int DEFAULT_PORT = 8282;
-    private final List<CommandHandler> handlers = new ArrayList<CommandHandler>();
+    public final List<CommandHandler> handlers = new ArrayList<CommandHandler>();
     private ExecutorService pool;
     private int port;
     private int sizeOfTreadPool;
@@ -28,25 +35,26 @@ public class HttpServer {
         ServerSocket serverSocket = new ServerSocket(port);
         while (true) {
             Socket socket = serverSocket.accept();
-            pool.submit(new ClientSession(socket));
+            pool.submit(new ClientSession(socket, this));
         }
+
     }
 
-    /*public CommandHandler findHandler(ResponseHandler rq) throws IOException {
-        Handler defHandler = new Handler(null, null, new DefHandler());
+    public CommandHandler findHandler(RequestHandler rq) throws IOException {
+        CommandHandler defHandler = new CommandHandler(null, null, new StepCommand());
         String methodFromRequest = rq.getMethod();
         String pathFromRequest = rq.getPath();
-
-        for (Handler handler : handlers) {
-            if (methodFromRequest.equals(handler.getMethod()) && MatcherUtils.isMatches(handler.getUri(), pathFromRequest)) {
+        for (CommandHandler handler : handlers) {
+            if (methodFromRequest.equals(handler.getMethod()) && handler.getUri().contains(pathFromRequest)) {
                 return handler;
             }
         }
         return defHandler;
-    }*/
+    }
 
-    public void addHandler(CommandHandler commandHandler){
+    public void addHandler(CommandHandler commandHandler) {
         handlers.add(commandHandler);
     }
+
 
 }

@@ -10,6 +10,10 @@ public class CommonConstants {
 
 	public static final String POST = "POST";
 
+	public static final String DELETE = "DELETE";
+
+	public static final String PUT = "PUT";
+
 	public static final String HOST = "Host:";
 
 	public static final String CONNECTION = "Connection:";
@@ -32,6 +36,7 @@ public class CommonConstants {
 
 	public static final String CONTENT_TYPE = "Content-Type:";
 
+	public static final String SAVED_BOOKS_PATH = "src/main/java/com/epam/httpserver/server/savedfile";
 
 	public static final String SPACE = " ";
 

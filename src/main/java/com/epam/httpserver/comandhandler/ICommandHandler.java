@@ -1,7 +1,7 @@
 package com.epam.httpserver.comandhandler;
 
 import com.epam.httpserver.handler.RequestHandler;
-import org.omg.CORBA.portable.ResponseHandler;
+import com.epam.httpserver.handler.ResponseHandler;
 
 import java.io.IOException;
 
