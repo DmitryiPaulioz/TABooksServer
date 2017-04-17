@@ -29,4 +29,8 @@ public class BookStorage {
             allBooks.removeLast();
         }
     }
+
+    public Book getConcretBook(int index){
+        return (allBooks.size() > index) ? allBooks.get(index) : null;
+    }
 }
