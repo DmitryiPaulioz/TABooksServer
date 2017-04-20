@@ -89,11 +89,13 @@ public class RequestHandler {
 
 
     public RequestHandler(BufferedReader bfr) {
+
         parseRequest(bfr);
     }
 
     private void parseRequest(BufferedReader bfr) {
         List<String> headerValue = null;
+
         try {
             headerValue = HttpMethodUtils.getHeaderValue(bfr);
         } catch (IOException e) {
@@ -101,6 +103,7 @@ public class RequestHandler {
         }
 
         for (String value : headerValue) {
+
             if (value.startsWith(CommonConstants.GET)) {
 
                 method = CommonConstants.GET;

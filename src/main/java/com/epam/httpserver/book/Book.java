@@ -10,7 +10,7 @@ public class Book {
     private int yearOfEdition;
     private int id;
 
-    public Book(String title, String authorName, int pageCount, int yearOfEdition, int id){
+    public Book(String title, String authorName, int pageCount, int yearOfEdition, int id) {
         this.title = title;
         this.authorName = authorName;
         this.pageCount = pageCount;
@@ -56,5 +56,16 @@ public class Book {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Id: " + id +
+                "\nTitle: " + title +
+                "\nAuthor: " + authorName +
+                "\nPage count: " + pageCount +
+                "\nYear of edition: " + yearOfEdition +
+                "\n";
+
     }
 }

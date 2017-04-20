@@ -9,7 +9,6 @@ import com.epam.httpserver.jsonhandler.JSONHandler;
 import com.epam.httpserver.resources.ResponseConstants;
 
 import java.io.IOException;
-import java.util.LinkedList;
 
 /**
  * Created by Dmitryi_Paulioz on 4/17/2017.
@@ -20,10 +19,10 @@ public class AddBook implements ICommandHandler {
     public void handle(RequestHandler request, ResponseHandler respond) throws IOException {
         System.out.println("Add book");
         try {
-            BookStorage bookStorage = new BookStorage();
-            bookStorage.setAllBooks(JSONHandler.readAllBooksFromJSON(JSON_SAVED_BOOKS_PATH));
-            bookStorage.addBook(new Book("Wizard of Earthsea", "Ursula K. Le Guin", 205, 1968, 1));
-            JSONHandler.writeAllBooksToJSON(bookStorage.getAllBooks(), JSON_SAVED_BOOKS_PATH);
+            COMMON_BOOK_STORAGE.setAllBooks(JSONHandler.readAllBooksFromJSON(JSON_SAVED_BOOKS_PATH, COMMON_BOOK_STORAGE));
+            Book newBook = new Book("Wizard of Earthsea", "Ursula K. Le Guin", 205, 1968, 1);
+            COMMON_BOOK_STORAGE.addBook(newBook);
+            JSONHandler.writeAllBooksToJSON(COMMON_BOOK_STORAGE, JSON_SAVED_BOOKS_PATH);
             String contentType = request.getContentType();
             respond.setContentType(contentType);
             respond.setStatusCode(ResponseConstants.STATUS_CODE_201_CREATED);

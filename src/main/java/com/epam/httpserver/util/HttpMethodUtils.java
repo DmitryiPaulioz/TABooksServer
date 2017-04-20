@@ -14,12 +14,14 @@ public class HttpMethodUtils {
 
 		List<String> headerValue = new ArrayList<String>();
 		String strForReadHeader;
-		while ((strForReadHeader = rq.readLine()) != null) {
+		strForReadHeader = rq.readLine();
+		while (strForReadHeader != null && !strForReadHeader.equals("")) {
 			headerValue.add(strForReadHeader);
+			strForReadHeader = rq.readLine();
 		}
-
 		int contentLength = getContentLength(headerValue);
 		if (contentLength > 0) {
+
 			headerValue.add(getPostBody(rq, contentLength));
 		}
 		return headerValue;
@@ -28,6 +30,7 @@ public class HttpMethodUtils {
 	private static int getContentLength(List<String> headerValue) {
 		int contentLength = 0;
 		for (String header : headerValue) {
+
 			if (header.contains(CommonConstants.CONTENT_LENGTH)) {
 				contentLength = Integer.parseInt(SplitUtils.getLastSplitValueBy(header, CommonConstants.COLON_SPLITTER));
 			}

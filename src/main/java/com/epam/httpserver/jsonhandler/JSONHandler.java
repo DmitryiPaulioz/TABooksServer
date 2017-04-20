@@ -1,15 +1,11 @@
 package com.epam.httpserver.jsonhandler;
 
 import com.epam.httpserver.book.Book;
+import com.epam.httpserver.bookstorage.BookStorage;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import java.util.LinkedList;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -17,33 +13,27 @@ import java.util.List;
  */
 public class JSONHandler {
 
-    private static LinkedList<Book> books = new LinkedList<Book>();
-    private static final Gson gson = new Gson();
+    private static final Gson gson = new GsonBuilder().create();
 
-    public static LinkedList readAllBooksFromJSON(String jsonPath) {
-        System.out.println("JSON read");
+    public static List<Book> readAllBooksFromJSON(String jsonPath, BookStorage bookStorage) {
         try {
-            books = gson.fromJson(new BufferedReader(new FileReader(jsonPath)), LinkedList.class);
-
-        } catch (FileNotFoundException e) {
+            bookStorage = gson.fromJson(new FileReader(jsonPath), BookStorage.class);
+        } catch (IOException e) {
+            System.out.println("There is no file");
             e.printStackTrace();
         }
-        return books;
+        return bookStorage.getAllBooks();
     }
 
-    public static String convertJSONToString(LinkedList<Book> books) {
-        return gson.toJson(books, books.getClass());
-    }
-
-    public static void writeAllBooksToJSON(LinkedList<Book> books, String jsonPath) {
-        FileWriter writer;
+    public static void writeAllBooksToJSON(BookStorage bookStorage, String jsonPath) {
+        Writer writer = null;
         try {
+            bookStorage.consoleLogAllContainedBooks();
             writer = new FileWriter(jsonPath);
-            writer.write(gson.toJson(books));
+            gson.toJson(bookStorage, writer);
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
-            writer = null;
         }
     }
 }

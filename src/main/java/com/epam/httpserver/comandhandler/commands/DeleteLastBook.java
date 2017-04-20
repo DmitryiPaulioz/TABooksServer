@@ -1,12 +1,10 @@
 package com.epam.httpserver.comandhandler.commands;
 
-import com.epam.httpserver.book.Book;
-import com.epam.httpserver.bookstorage.BookStorage;
 import com.epam.httpserver.comandhandler.ICommandHandler;
 import com.epam.httpserver.handler.RequestHandler;
 import com.epam.httpserver.jsonhandler.JSONHandler;
 import com.epam.httpserver.resources.ResponseConstants;
-import org.omg.CORBA.portable.ResponseHandler;
+import com.epam.httpserver.handler.ResponseHandler;
 
 import java.io.IOException;
 
@@ -14,13 +12,12 @@ import java.io.IOException;
  * Created by Dmitryi_Paulioz on 4/17/2017.
  */
 public class DeleteLastBook implements ICommandHandler {
-    public void handle(RequestHandler request, com.epam.httpserver.handler.ResponseHandler respond) throws IOException {
+    public void handle(RequestHandler request, ResponseHandler respond) throws IOException {
         System.out.println("Delete book");
         try {
-            BookStorage bookStorage = new BookStorage();
-            bookStorage.setAllBooks(JSONHandler.readAllBooksFromJSON(JSON_SAVED_BOOKS_PATH));
-            bookStorage.deleteLastBook();
-            JSONHandler.writeAllBooksToJSON(bookStorage.getAllBooks(), JSON_SAVED_BOOKS_PATH);
+            COMMON_BOOK_STORAGE.setAllBooks(JSONHandler.readAllBooksFromJSON(JSON_SAVED_BOOKS_PATH, COMMON_BOOK_STORAGE));
+            COMMON_BOOK_STORAGE.deleteLastBook();
+            JSONHandler.writeAllBooksToJSON(COMMON_BOOK_STORAGE, JSON_SAVED_BOOKS_PATH);
             String contentType = request.getContentType();
             respond.setContentType(contentType);
             respond.setStatusCode(ResponseConstants.STATUS_CODE_201_CREATED);

@@ -2,7 +2,9 @@ package com.epam.httpserver.executor;
 
 import com.epam.httpserver.comandhandler.CommandHandler;
 import com.epam.httpserver.comandhandler.commands.AddBook;
+import com.epam.httpserver.comandhandler.commands.DeleteLastBook;
 import com.epam.httpserver.comandhandler.commands.GetAllBooks;
+import com.epam.httpserver.comandhandler.commands.UpdateBook;
 import com.epam.httpserver.resources.CommonConstants;
 import com.epam.httpserver.server.HttpServer;
 
@@ -18,8 +20,10 @@ public class Main {
 
     public static void main(String args[]){
         HttpServer server = new HttpServer(UPRUNNING_PORT, UPRUNNING_POOL_SIZE);
-        server.addHandler(new CommandHandler(CommonConstants.GET, "/book/get", new GetAllBooks()));
-        //server.addHandler(new CommandHandler(CommonConstants.POST, "/book/new", new AddBook()));
+        server.addHandler(new CommandHandler(CommonConstants.GET, "/book", new GetAllBooks()));
+        server.addHandler(new CommandHandler(CommonConstants.POST, "/book", new AddBook()));
+        server.addHandler(new CommandHandler(CommonConstants.DELETE, "/book", new DeleteLastBook()));
+        server.addHandler(new CommandHandler(CommonConstants.PUT, "/book", new UpdateBook()));
         try {
             server.start();
         } catch (IOException e) {
