@@ -77,7 +77,7 @@ public class ResponseHandler {
     private String date;
     private String contentType;
     private String contentLength;
-    private String body;
+    private static String body;
 
     private OutputStream os;
 
@@ -86,19 +86,19 @@ public class ResponseHandler {
         this.os = outputStream;
     }
 
-    public static void createResponse(ResponseHandler responce, RequestHandler request) {
-
-        String body = "";
-        responce.setVersion(request.getVersion());
-        responce.setContentLength(String.valueOf(body.getBytes().length));
-        responce.setBody(body);
-        responce.setContentType(request.getContentType());
-
+    public static void createResponse(ResponseHandler response, RequestHandler request) {
+        response.setVersion(request.getVersion());
+        response.setContentLength(String.valueOf(body.getBytes().length));
+        response.setBody(body);
+        response.setContentType(request.getContentType());
         try {
-            responce.write();
-            System.out.println(responce);
+            response.write();
+            System.out.println(response);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        finally {
+            body = "";
         }
     }
 
@@ -121,6 +121,7 @@ public class ResponseHandler {
         responseMap.put(CommonConstants.CONNECTION, ResponseConstants.CONNECTION_VALUE);
 
         if (!body.isEmpty()) {
+
             responseMap.put(ResponseConstants.BODY, body);
         }
 

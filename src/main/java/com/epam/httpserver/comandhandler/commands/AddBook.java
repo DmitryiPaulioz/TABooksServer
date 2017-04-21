@@ -20,11 +20,11 @@ public class AddBook implements ICommandHandler {
         System.out.println("Add book");
         try {
             COMMON_BOOK_STORAGE.setAllBooks(JSONHandler.readAllBooksFromJSON(JSON_SAVED_BOOKS_PATH, COMMON_BOOK_STORAGE));
+
             Book newBook = new Book("Wizard of Earthsea", "Ursula K. Le Guin", 205, 1968, 1);
             COMMON_BOOK_STORAGE.addBook(newBook);
+
             JSONHandler.writeAllBooksToJSON(COMMON_BOOK_STORAGE, JSON_SAVED_BOOKS_PATH);
-            String contentType = request.getContentType();
-            respond.setContentType(contentType);
             respond.setStatusCode(ResponseConstants.STATUS_CODE_201_CREATED);
         } catch (Exception ex) {
             respond.setStatusCode(ResponseConstants.STATUS_CODE_400_BAD_REQUEST);

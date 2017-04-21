@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 
 import java.io.*;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by Dmitryi_Paulioz on 4/11/2017.
@@ -14,19 +15,31 @@ import java.util.List;
 public class JSONHandler {
 
     private static final Gson gson = new GsonBuilder().create();
+    private static final ReentrantLock inputLock = new ReentrantLock();
+    private static final ReentrantLock outputtLock = new ReentrantLock();
 
     public static List<Book> readAllBooksFromJSON(String jsonPath, BookStorage bookStorage) {
+        inputLock.lock();
         try {
-            bookStorage = gson.fromJson(new FileReader(jsonPath), BookStorage.class);
+
+            if(bookStorage.countOfBooksInStotage() == 0) {
+                bookStorage = gson.fromJson(new FileReader(jsonPath), BookStorage.class);
+            }
+
         } catch (IOException e) {
-            System.out.println("There is no file");
             e.printStackTrace();
+        }
+        finally {
+            if(inputLock.isLocked()){
+                inputLock.unlock();
+            }
         }
         return bookStorage.getAllBooks();
     }
 
     public static void writeAllBooksToJSON(BookStorage bookStorage, String jsonPath) {
         Writer writer = null;
+        outputtLock.lock();
         try {
             bookStorage.consoleLogAllContainedBooks();
             writer = new FileWriter(jsonPath);
@@ -34,6 +47,11 @@ public class JSONHandler {
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        finally {
+            if(outputtLock.isLocked()){
+                outputtLock.unlock();
+            }
         }
     }
 }

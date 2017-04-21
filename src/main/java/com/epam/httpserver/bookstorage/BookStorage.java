@@ -46,8 +46,11 @@ public class BookStorage {
         return (allBooks.size() > index) ? allBooks.get(index) : null;
     }
 
-    @Override
+    public int countOfBooksInStotage(){
+        return allBooks.size();
+    }
 
+    @Override
     public String toString(){
         String result = "Current books: ";
         for (Book book : allBooks) {

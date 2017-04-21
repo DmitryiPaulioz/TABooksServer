@@ -19,8 +19,6 @@ public class UpdateBook implements ICommandHandler {
             Book changedBook = COMMON_BOOK_STORAGE.getConcreteBook(0);
             changedBook.setAuthorName(changedBook.getAuthorName() + changedBook.getId());
             JSONHandler.writeAllBooksToJSON(COMMON_BOOK_STORAGE, JSON_SAVED_BOOKS_PATH);
-            String contentType = request.getContentType();
-            respond.setContentType(contentType);
             respond.setStatusCode(ResponseConstants.STATUS_CODE_201_CREATED);
         } catch (Exception ex) {
             respond.setStatusCode(ResponseConstants.STATUS_CODE_400_BAD_REQUEST);

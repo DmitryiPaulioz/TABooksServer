@@ -20,9 +20,7 @@ public class GetAllBooks implements ICommandHandler {
         try {
             COMMON_BOOK_STORAGE.setAllBooks(JSONHandler.readAllBooksFromJSON(JSON_SAVED_BOOKS_PATH, COMMON_BOOK_STORAGE));
             String body = COMMON_BOOK_STORAGE.toString();
-            System.out.println(body);
-            String contentType = request.getContentType();
-            respond.setContentType(contentType);
+            respond.setBody(body);
             respond.setStatusCode(ResponseConstants.STATUS_CODE_200_OK);
         } catch (Exception e) {
             respond.setStatusCode(ResponseConstants.STATUS_CODE_400_BAD_REQUEST);

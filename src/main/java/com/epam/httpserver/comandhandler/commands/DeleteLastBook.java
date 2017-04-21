@@ -18,8 +18,6 @@ public class DeleteLastBook implements ICommandHandler {
             COMMON_BOOK_STORAGE.setAllBooks(JSONHandler.readAllBooksFromJSON(JSON_SAVED_BOOKS_PATH, COMMON_BOOK_STORAGE));
             COMMON_BOOK_STORAGE.deleteLastBook();
             JSONHandler.writeAllBooksToJSON(COMMON_BOOK_STORAGE, JSON_SAVED_BOOKS_PATH);
-            String contentType = request.getContentType();
-            respond.setContentType(contentType);
             respond.setStatusCode(ResponseConstants.STATUS_CODE_201_CREATED);
         } catch (Exception ex) {
             respond.setStatusCode(ResponseConstants.STATUS_CODE_400_BAD_REQUEST);
