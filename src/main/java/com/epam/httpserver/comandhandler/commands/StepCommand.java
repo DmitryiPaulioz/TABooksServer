@@ -12,6 +12,5 @@ import java.io.IOException;
 public class StepCommand implements ICommandHandler {
 
     public void handle(RequestHandler request, com.epam.httpserver.handler.ResponseHandler respond) throws IOException {
-
     }
 }

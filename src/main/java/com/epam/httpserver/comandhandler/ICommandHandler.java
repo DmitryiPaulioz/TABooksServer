@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public interface ICommandHandler {
     BookStorage COMMON_BOOK_STORAGE = new BookStorage();
-    String JSON_SAVED_BOOKS_PATH = "src\\main\\java\\com\\epam\\httpserver\\server\\savedfile\\savedBooks.json";
+    String JSON_SAVED_BOOKS_PATH = "src\\main\\java\\com\\epam\\httpserver\\resources\\savedBooks.json";
 
     void handle(RequestHandler request, ResponseHandler respond) throws IOException;
 }

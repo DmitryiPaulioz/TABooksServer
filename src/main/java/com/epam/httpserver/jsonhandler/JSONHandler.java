@@ -16,7 +16,7 @@ public class JSONHandler {
 
     private static final Gson gson = new GsonBuilder().create();
     private static final ReentrantLock inputLock = new ReentrantLock();
-    private static final ReentrantLock outputtLock = new ReentrantLock();
+    private static final ReentrantLock outputLock = new ReentrantLock();
 
     public static List<Book> readAllBooksFromJSON(String jsonPath, BookStorage bookStorage) {
         inputLock.lock();
@@ -39,7 +39,7 @@ public class JSONHandler {
 
     public static void writeAllBooksToJSON(BookStorage bookStorage, String jsonPath) {
         Writer writer = null;
-        outputtLock.lock();
+        outputLock.lock();
         try {
             bookStorage.consoleLogAllContainedBooks();
             writer = new FileWriter(jsonPath);
@@ -49,8 +49,8 @@ public class JSONHandler {
             e.printStackTrace();
         }
         finally {
-            if(outputtLock.isLocked()){
-                outputtLock.unlock();
+            if(outputLock.isLocked()){
+                outputLock.unlock();
             }
         }
     }

@@ -1,39 +1,38 @@
-/*package com.epam.httpserverwithbooks.tests;
+package com.epam.httpserverwithbooks.tests;
 
-import com.epam.httpserverwithbooks.driver.DriverSingleton;
-import com.epam.httpserverwithbooks.util.SessionHelper;
-import org.openqa.selenium.NoSuchSessionException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.*;
-
-import java.io.IOException;
+import com.jayway.restassured.RestAssured;
+import org.testng.annotations.BeforeClass;
 
 public class PreparationSteps {
 
-    protected static final String START_PAGE_URL = "localhost";
-    protected static DesiredCapabilities capabilities;
-    protected WebDriver driver;
 
-    @BeforeSuite
-    public void initTestSuite() throws IOException {
-        String browserName = SessionHelper.selectBrowser();
-        if ((capabilities = SessionHelper.getBrowserCaps(browserName.toLowerCase())) == null) {
-            throw new NoSuchSessionException("Required parameters can't be set");
+    protected final String JSON_CONTENT_TYPE = "application/json";
+    private final String DEFAULT_PATH = "/test/";
+    private final String DEFAULT_PORT = "8181";
+    private final String DEFAULT_HOST = "http://localhost";
+
+
+    @BeforeClass
+    public void setRestAssuredUp() {
+        String port = System.getProperty("server.port");
+        String basePath = System.getProperty("server,base");
+        String baseHost = System.getProperty("server.host");
+        if (port == null) {
+            port = DEFAULT_PORT;
         }
+        if (basePath == null) {
+            basePath = DEFAULT_PATH;
+        }
+        if (baseHost == null) {
+            baseHost = DEFAULT_HOST;
+        }
+        RestAssured.port = Integer.valueOf(port);
+        RestAssured.basePath = basePath;
+        RestAssured.baseURI = baseHost;
+/*
+        System.out.println(RestAssured.port);
+        System.out.println(RestAssured.baseURI);
+        System.out.println(RestAssured.basePath);*/
     }
 
-    @BeforeMethod
-    public void initWebDriver() throws InterruptedException {
-        driver = DriverSingleton.getDriver(capabilities);
-        System.out.println("Switch-over to PreparationSteps after running webdriver");
-        driver.navigate().to(START_PAGE_URL);
-        System.out.println("Passed to start URL ");
-    }
-
-    @AfterMethod
-    public void tearDown() {
-        DriverSingleton.closeDriver();
-    }
 }
-*/
