@@ -18,6 +18,14 @@ public class Book {
         this.id = id;
     }
 
+    public Book(){
+        title = "Wizard of Earthsea";
+        authorName = "Ursula K. Le Guin";
+        pageCount = 205;
+        yearOfEdition = 1968;
+        id = 1;
+    }
+
     public String getTitle() {
         return title;
     }

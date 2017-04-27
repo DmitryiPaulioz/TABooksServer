@@ -7,6 +7,7 @@ public class PreparationSteps {
 
 
     protected final String JSON_CONTENT_TYPE = "application/json";
+    protected final String DEFAULT_COMMAND_PATH = "/book";
     private final String DEFAULT_PATH = "/test/";
     private final String DEFAULT_PORT = "8181";
     private final String DEFAULT_HOST = "http://localhost";

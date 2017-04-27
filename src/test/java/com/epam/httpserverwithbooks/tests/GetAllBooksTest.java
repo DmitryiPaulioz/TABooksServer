@@ -1,5 +1,6 @@
 package com.epam.httpserverwithbooks.tests;
 
+import com.jayway.restassured.response.Response;
 import org.testng.annotations.Test;
 
 
@@ -12,6 +13,11 @@ public class GetAllBooksTest extends PreparationSteps{
 
     @Test
     public void getAllBooksFromJSONTest() {
-        System.out.println(given().contentType(JSON_CONTENT_TYPE).when().get("/book"));
+        Response rp =
+                given()
+                        .contentType(JSON_CONTENT_TYPE)
+                .when()
+                        .get("/book")
+                .thenReturn();
     }
 }
