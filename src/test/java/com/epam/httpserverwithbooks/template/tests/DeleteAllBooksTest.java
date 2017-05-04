@@ -3,23 +3,20 @@ package com.epam.httpserverwithbooks.template.tests;
 import com.epam.httpserverwithbooks.template.PreparationSteps;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.testng.Assert;
 import org.springframework.web.client.RestTemplate;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
- * Created by Dmitryi_Paulioz on 5/4/2017.
+ * Created by Lenigard on 04.05.2017.
  */
-public class GetBooksTest extends PreparationSteps {
-
+public class DeleteAllBooksTest extends PreparationSteps{
     @Test
-    public void getAllBooksFromJSONAndCheckStatusCodeIsSuccessfulTest() {
+    public void deleteAllBooksInJSONAndCheckStatusCodeTest(){
         RestTemplate restTemplate = new RestTemplate();
+        restTemplate.delete(DEFAULT_BOOK_URL);
         ResponseEntity<String> response = restTemplate.getForEntity(DEFAULT_BOOK_URL, String.class);
-        HttpStatus statusCodeHandler = response.getStatusCode();
-        Assert.assertTrue(statusCodeHandler.is2xxSuccessful());
+        Assert.assertTrue(response.getBody().equals(""));
     }
 
-
 }
-
