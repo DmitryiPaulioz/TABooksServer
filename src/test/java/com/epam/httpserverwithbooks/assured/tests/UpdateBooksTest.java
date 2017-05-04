@@ -1,6 +1,7 @@
-package com.epam.httpserverwithbooks.tests;
+package com.epam.httpserverwithbooks.assured.tests;
 
 import com.epam.httpserver.book.Book;
+import com.epam.httpserverwithbooks.assured.PreparationSteps;
 import com.jayway.restassured.response.Response;
 import org.testng.annotations.Test;
 
